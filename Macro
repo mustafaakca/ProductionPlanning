@@ -1,0 +1,1829 @@
+Sub Makro1()
+
+
+'Call AdaGoreSirala
+'
+' Makro1 Makro
+' Makro Mustafa tarafýndan 03.01.2008 tarihinde kaydedildi.
+'
+' Klavye Kýsayolu: Ctrl+u
+'
+    Columns("A:A").Select
+    Selection.Delete Shift:=xlToLeft
+    Rows("1:2").Select
+    Selection.Delete Shift:=xlUp
+    ActiveWindow.ScrollColumn = 2
+    ActiveWindow.ScrollColumn = 3
+    Columns("N:N").Select
+    Selection.Insert Shift:=xlToRight
+    Selection.Insert Shift:=xlToRight
+    Selection.Insert Shift:=xlToRight
+    Range("N1").Select
+    ActiveCell.FormulaR1C1 = "BT-YK"
+    With ActiveCell.Characters(Start:=1, Length:=5).Font
+        .Name = "Arial"
+        .FontStyle = "Kalýn"
+        .Size = 10
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ColorIndex = 2
+    End With
+    Range("O1").Select
+    ActiveCell.FormulaR1C1 = "KL-YK"
+    With ActiveCell.Characters(Start:=1, Length:=5).Font
+        .Name = "Arial"
+        .FontStyle = "Kalýn"
+        .Size = 10
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ColorIndex = 2
+    End With
+    Range("P1").Select
+    ActiveCell.FormulaR1C1 = "RVZ"
+    With ActiveCell.Characters(Start:=1, Length:=3).Font
+        .Name = "Arial"
+        .FontStyle = "Kalýn"
+        .Size = 10
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ColorIndex = 2
+    End With
+    Range("N9").Select
+    ActiveWindow.SmallScroll Down:=-6
+    
+    
+    Set Sh = Sheets("Sayfa1")
+    sondv = Sh.Cells(65536, 1).End(xlUp).Row
+    ' sondv kayýt sayýsý
+    Dim counter As Integer
+    Dim say As Integer
+    Dim Bt As Integer
+    Dim tatil As Integer
+     Dim bitenn As Long
+     
+     Dim kalann As Long
+     Dim yukn As Long
+  
+    
+    
+     donus = Application.InputBox(" Bugünden sonra ay sonuna kadar hafta içi resmi tatil sayýsýný girin...")
+   
+   If Trim(donus) = "" Then
+        tatil = 0
+   Else
+        tatil = donus
+   End If
+    
+    For counter = 1 To sondv
+        
+        If Sh.Cells(counter, 5) = "HASAN TOP" Or Sh.Cells(counter, 5) = "AYÞEGÜL SAVCI" Or Sh.Cells(counter, 5) = "BAHAR ÖNTAÞ" Or Sh.Cells(counter, 5) = "DAVUT DURSUN" Or Sh.Cells(counter, 5) = "BÜLENT AKPINAR" Or Sh.Cells(counter, 5) = "KEREM KÜÇÜK" Or Sh.Cells(counter, 5) = "AYSEL GÜZEL" Or Sh.Cells(counter, 5) = "TÜMAY TOPÇU" Or Sh.Cells(counter, 5) = "ZÜBEYDE OKUR" Then
+        
+        say = say + 1
+        Else
+        Sh.Cells(counter, 5) = "DAVUT DURSUN"
+        
+        
+        
+        'sh.Cells(1, 20).Value = say
+        
+        End If
+    Next counter
+    
+    
+   
+    For counter = 1 To sondv
+        If Sh.Cells(counter, 7) = "Ankastre 2" Then
+        Sh.Cells(counter, 7) = "Ankastre"
+        End If
+        If Sh.Cells(counter, 7) = "Fluorsn SU" Then
+        Sh.Cells(counter, 7) = "Sýva Üstü"
+        End If
+     Next counter
+     
+     
+     For counter = 1 To sondv
+        If Sh.Cells(counter, 7) = "" Then
+        Sh.Cells(counter, 7) = Application.InputBox(Sh.Cells(counter, 6).Value & " Kodlu Ürün Ýçin Ürün Gurubunu Girin. Yarý Mamulse Boþ Býrakýn")
+        End If
+     Next counter
+    
+
+      For counter = 1 To sondv
+        If Sh.Cells(counter, 13) = "" Then
+        Sh.Cells(counter, 13) = Application.InputBox(Sh.Cells(counter, 6).Value & " Kodlu Ürün Ýçin Yük Deðerini Girin. Yarý Mamulse 0 olarak giriþ yapýn")
+        End If
+     Next counter
+     
+     
+     
+
+     
+     bitenn = Sh.Cells(counter, 11).Value
+     kalann = Sh.Cells(counter, 12).Value
+     yukn = Sh.Cells(counter, 13).Value
+     
+     
+    For counter = 2 To sondv
+        Sh.Cells(counter, 14).Value = bitenn * yukn / 10
+    
+        
+        
+       'sh.Cells(counter, 14).Value = sh.Cells(counter, 11).Value * sh.Cells(counter, 13).Value / 10
+    Next counter
+    
+     For counter = 2 To sondv
+         Sh.Cells(counter, 15).Value = kalann * yukn / 10
+        'sh.Cells(counter, 15).Value = sh.Cells(counter, 13).Value * sh.Cells(counter, 12).Value / 10
+    Next counter
+    
+    
+    
+     
+    
+    
+    
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+
+ 
+ 
+ 
+    
+ 
+'MsgBox (BugunUretilecek())
+'360 çýktý Rapordaki Bugünkü üretilecek miktarýna gircek.
+Set rp = Sheets("Rapor")
+
+rp.Cells(2, 2) = DateTime.DateValue(DateTime.Now) & " Günlük Üretim Planlama Raporu"
+rp.Cells(6, 3) = BugunUretilecek()
+rp.Cells(5, 3) = BugunUretilen()
+
+rp.Cells(5, 5) = BuAyToplamUretilen()
+
+rp.Cells(6, 5) = BuAyToplamUretilecek()
+
+rp.Cells(10, 3) = BugunUretilecek() / 4000
+
+
+
+
+
+Dim ek As Integer
+Dim tar As Integer
+Dim saytar As Integer
+
+
+
+
+
+
+ek = 1
+
+Set pl = Sheets("Plan")
+For tar = 1 To 28
+    For counter = 2 To sondv
+    If DateTime.DateValue(Sh.Cells(counter, 10)) = DateTime.DateValue(DateTime.Now + tar) Then
+    saytar = saytar + 1
+        If saytar = 1 Then
+        ek = ek + 1
+        End If
+        pl.Cells(ek, 2) = pl.Cells(ek, 2) + Sh.Cells(counter, 15)
+        pl.Cells(ek, 1) = DateTime.DateValue(Sh.Cells(counter, 10))
+        pl.Cells(ek, 3) = pl.Cells(ek, 2) / 4000
+                       
+            
+    End If
+    
+    Next counter
+    saytar = 0
+Next tar
+ek = 1
+pl.Cells(1, 1) = DateTime.DateValue(DateTime.Now)
+pl.Cells(1, 2) = BugunUretilecek()
+pl.Cells(1, 3) = BugunUretilecek() / 4000
+
+
+
+
+Dim aysay As Integer
+Dim degertopla As Long
+Dim aygunu As Integer
+Dim isgunu As Integer
+
+
+If DateTime.Month(DateTime.Now) = 1 Then
+    aygunu = 31
+End If
+
+If DateTime.Month(DateTime.Now) = 2 Then
+    aygunu = 28
+End If
+
+If DateTime.Month(DateTime.Now) = 3 Then
+    aygunu = 31
+End If
+
+If DateTime.Month(DateTime.Now) = 4 Then
+    aygunu = 30
+End If
+
+If DateTime.Month(DateTime.Now) = 5 Then
+    aygunu = 31
+End If
+
+If DateTime.Month(DateTime.Now) = 6 Then
+    aygunu = 30
+End If
+
+If DateTime.Month(DateTime.Now) = 7 Then
+    aygunu = 31
+End If
+
+If DateTime.Month(DateTime.Now) = 8 Then
+    aygunu = 31
+End If
+
+If DateTime.Month(DateTime.Now) = 9 Then
+    aygunu = 30
+End If
+
+If DateTime.Month(DateTime.Now) = 10 Then
+    aygunu = 31
+End If
+
+If DateTime.Month(DateTime.Now) = 11 Then
+    aygunu = 30
+End If
+
+If DateTime.Month(DateTime.Now) = 12 Then
+    aygunu = 31
+End If
+
+
+
+
+
+satirsayi = pl.Cells(65536, 1).End(xlUp).Row
+
+For tar = 1 To satirsayi
+    If DateTime.Month(pl.Cells(tar, 1)) = DateTime.Month(DateTime.Now) Then
+    'aysay = aysay + 1
+    degertopla = degertopla + pl.Cells(tar, 2)
+    End If
+Next tar
+
+
+For tars = 0 To aygunu - DateTime.Day(DateTime.Now)
+    
+    If DateTime.Weekday(DateTime.Now + tars) = 7 Or DateTime.Weekday(DateTime.Now + tars) = 1 Then
+    
+    Else
+        aysay = aysay + 1
+    End If
+    
+
+Next tars
+
+
+
+'pl.Cells(1, 7) = DateTime.Day(DateTime.Now)
+'pl.Cells(1, 7) = DateTime.Month(DateTime.Now)
+
+
+
+
+rp.Cells(10, 4) = YarinUretilecek()
+rp.Cells(10, 5) = ErtesiGunUretilecek()
+
+
+pl.Cells(1, 4) = degertopla
+pl.Cells(1, 5) = aysay - tatil
+pl.Cells(1, 6) = degertopla / (aysay - tatil) / 4000
+pl.Cells(1, 7) = DateTime.Day(DateTime.Now)
+pl.Cells(2, 7) = aygunu
+
+rp.Cells(10, 6) = pl.Cells(1, 6)
+
+  aysay = 0
+degertopla = 0
+   
+    
+
+
+If DateTime.Weekday(DateTime.Now) = 6 Then
+pl.Cells(1, 8) = DateTime.Day(DateTime.Now - 1)
+
+'Stringe çevirmeye çalýþýyorum en son
+'DateTime.Day(DateTime.Now + 3)
+End If
+
+
+
+
+    Set pl = Sheets("Plan")
+    sondv = pl.Cells(65536, 1).End(xlUp).Row
+
+
+
+If DateTime.Weekday(DateTime.Now) = 2 Then
+    
+    pl.Cells(5, 5) = DateTime.Day(DateTime.Now) & "." & DateTime.Month(DateTime.Now) & "-" & DateTime.Day(DateTime.Now + 4) & "." & DateTime.Month(DateTime.Now + 4)
+    pl.Cells(6, 5) = DateTime.Day(DateTime.Now + 7) & "." & DateTime.Month(DateTime.Now + 7) & "-" & DateTime.Day(DateTime.Now + 11) & "." & DateTime.Month(DateTime.Now + 11)
+    pl.Cells(7, 5) = DateTime.Day(DateTime.Now + 14) & "." & DateTime.Month(DateTime.Now + 14) & "-" & DateTime.Day(DateTime.Now + 18) & "." & DateTime.Month(DateTime.Now + 18)
+    pl.Cells(8, 5) = DateTime.Day(DateTime.Now + 21) & "." & DateTime.Month(DateTime.Now + 21) & "-" & DateTime.Day(DateTime.Now + 25) & "." & DateTime.Month(DateTime.Now + 25)
+
+
+Set pl = Sheets("Plan")
+    sondv = pl.Cells(65536, 1).End(xlUp).Row
+    
+   For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 5) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now - 1) Then
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     pl.Cells(i, 11) = " 1.HAFTA"
+     
+     End If
+    Next i
+    
+   
+    
+    
+     pl.Cells(5, 6) = topla
+     If DateTime.Weekday(DateTime.Now) < 7 And DateTime.Weekday(DateTime.Now) > 1 Then
+        
+     
+        pl.Cells(5, 7) = (topla / (7 - DateTime.Weekday(DateTime.Now))) / 4000
+     
+     Else
+     
+        pl.Cells(5, 7) = (topla / (7 - DateTime.Weekday(DateTime.Now))) / 4000
+     End If
+     
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+     
+     
+     
+     topla = 0
+     sayak = 0
+     
+     
+     
+     
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 12) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 6) Then
+     'MsgBox (pl.Cells(i, 1))
+     
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 2.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(6, 6) = topla
+     pl.Cells(6, 7) = (topla / 5) / 4000
+    
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+    
+    
+    For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 19) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 13) Then
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 3.HAFTA"
+     End If
+    Next i
+    
+    
+    
+     
+     pl.Cells(7, 6) = topla
+     If sayak <> 0 Then
+        pl.Cells(7, 7) = (topla / 5) / 4000
+     End If
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 26) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 20) Then
+     pl.Cells(i, 11) = " 4.HAFTA"
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     End If
+    Next i
+    
+    
+    If sayak = 0 Then
+    sayak = 1
+    End If
+    
+    
+     pl.Cells(8, 6) = topla
+     pl.Cells(8, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    ' MsgBox ((topla / sayak) / 4000)
+     
+    
+     topla = 0
+     sayak = 0
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+
+    'Dim topla As Long
+    'Dim sayak As Integer
+    
+    
+    'pl.Cells(5, 5) = DateTime.Day(DateTime.Now) & "." & DateTime.Month(DateTime.Now) & "-" & DateTime.Day(DateTime.Now + 4) & "." & DateTime.Month(DateTime.Now + 4)
+    
+    
+    'For i = 1 To sondv
+     'If pl.Cells(i, 1) < DateTime.Now + 4 Then
+     'topla = topla + pl.Cells(i, 2)
+     'sayak = sayak + 1
+     'End If
+    'Next i
+    
+   '  pl.Cells(5, 6) = topla
+   '  pl.Cells(5, 7) = topla / say / 4000
+     
+    
+    
+    
+    
+    
+    'pl.Cells(6, 5) = DateTime.Day(DateTime.Now + 7) & "." & DateTime.Month(DateTime.Now + 7) & "-" & DateTime.Day(DateTime.Now + 11) & "." & DateTime.Month(DateTime.Now + 11)
+    'pl.Cells(7, 5) = DateTime.Day(DateTime.Now + 14) & "." & DateTime.Month(DateTime.Now + 14) & "-" & DateTime.Day(DateTime.Now + 18) & "." & DateTime.Month(DateTime.Now + 18)
+    'pl.Cells(8, 5) = DateTime.Day(DateTime.Now + 21) & "." & DateTime.Month(DateTime.Now + 21) & "-" & DateTime.Day(DateTime.Now + 25) & "." & DateTime.Month(DateTime.Now + 25)
+    
+    
+End If
+
+If DateTime.Weekday(DateTime.Now) = 3 Then
+    
+
+   pl.Cells(5, 5) = DateTime.Day(DateTime.Now - 1) & "." & DateTime.Month(DateTime.Now - 1) & "-" & DateTime.Day(DateTime.Now + 3) & "." & DateTime.Month(DateTime.Now + 3)
+    pl.Cells(6, 5) = DateTime.Day(DateTime.Now + 6) & "." & DateTime.Month(DateTime.Now + 6) & "-" & DateTime.Day(DateTime.Now + 10) & "." & DateTime.Month(DateTime.Now + 10)
+    pl.Cells(7, 5) = DateTime.Day(DateTime.Now + 13) & "." & DateTime.Month(DateTime.Now + 13) & "-" & DateTime.Day(DateTime.Now + 17) & "." & DateTime.Month(DateTime.Now + 17)
+    pl.Cells(8, 5) = DateTime.Day(DateTime.Now + 20) & "." & DateTime.Month(DateTime.Now + 20) & "-" & DateTime.Day(DateTime.Now + 24) & "." & DateTime.Month(DateTime.Now + 24)
+    
+    Set pl = Sheets("Plan")
+    sondv = pl.Cells(65536, 1).End(xlUp).Row
+    
+   For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 4) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now - 2) Then
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     pl.Cells(i, 11) = " 1.HAFTA"
+     
+     End If
+    Next i
+    
+   
+    
+    
+     pl.Cells(5, 6) = topla
+     pl.Cells(5, 7) = (topla / (7 - DateTime.Weekday(DateTime.Now))) / 4000
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+     
+     
+     
+     topla = 0
+     sayak = 0
+     
+     
+     
+     
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 11) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 5) Then
+     'MsgBox (pl.Cells(i, 1))
+     
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 2.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(6, 6) = topla
+     pl.Cells(6, 7) = (topla / 5) / 4000
+    
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+    
+    
+    For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 18) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 12) Then
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 3.HAFTA"
+     End If
+    Next i
+    
+    If sayak = 0 Then
+    sayak = 1
+    End If
+    
+    
+    
+     pl.Cells(7, 6) = topla
+     pl.Cells(7, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 25) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 19) Then
+     pl.Cells(i, 11) = " 4.HAFTA"
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     End If
+    Next i
+    
+    
+    If sayak = 0 Then
+    sayak = 1
+    End If
+    
+     pl.Cells(8, 6) = topla
+     pl.Cells(8, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    ' MsgBox ((topla / sayak) / 4000)
+     
+    
+     topla = 0
+     sayak = 0
+     
+    
+    
+End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+If DateTime.Weekday(DateTime.Now) = 4 Then
+    
+
+    pl.Cells(5, 5) = DateTime.Day(DateTime.Now - 2) & "." & DateTime.Month(DateTime.Now - 2) & "-" & DateTime.Day(DateTime.Now + 2) & "." & DateTime.Month(DateTime.Now + 2)
+    pl.Cells(6, 5) = DateTime.Day(DateTime.Now + 5) & "." & DateTime.Month(DateTime.Now + 5) & "-" & DateTime.Day(DateTime.Now + 9) & "." & DateTime.Month(DateTime.Now + 9)
+    pl.Cells(7, 5) = DateTime.Day(DateTime.Now + 12) & "." & DateTime.Month(DateTime.Now + 12) & "-" & DateTime.Day(DateTime.Now + 16) & "." & DateTime.Month(DateTime.Now + 16)
+    pl.Cells(8, 5) = DateTime.Day(DateTime.Now + 19) & "." & DateTime.Month(DateTime.Now + 19) & "-" & DateTime.Day(DateTime.Now + 23) & "." & DateTime.Month(DateTime.Now + 23)
+    'pl.Cells(5, 5) = DateTime.Day(DateTime.Now) & "." & DateTime.Month(DateTime.Now) & "-" & DateTime.Day(DateTime.Now + 4) & "." & DateTime.Month(DateTime.Now + 4)
+    
+    Set pl = Sheets("Plan")
+    sondv = pl.Cells(65536, 1).End(xlUp).Row
+    
+    For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 3) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now - 3) Then
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     pl.Cells(i, 11) = " 1.HAFTA"
+     
+     End If
+    Next i
+    
+   
+    
+    
+     pl.Cells(5, 6) = topla
+     pl.Cells(5, 7) = (topla / (7 - DateTime.Weekday(DateTime.Now))) / 4000
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+     
+     
+     
+     topla = 0
+     sayak = 0
+     
+     
+     
+     
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 10) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 4) Then
+     'MsgBox (pl.Cells(i, 1))
+     
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 2.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(6, 6) = topla
+     pl.Cells(6, 7) = (topla / 5) / 4000
+    
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+    
+    
+    For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 17) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 11) Then
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 3.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(7, 6) = topla
+     If sayak = 0 Then
+        pl.Cells(7, 7) = 0
+     Else
+        pl.Cells(7, 7) = (topla / 5) / 4000
+     End If
+     
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 24) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 18) Then
+     pl.Cells(i, 11) = " 4.HAFTA"
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     End If
+    Next i
+    
+    
+    
+    If sayak = 0 Then
+    sayak = 1
+    End If
+    
+    
+     pl.Cells(8, 6) = topla
+     pl.Cells(8, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    ' MsgBox ((topla / sayak) / 4000)
+     
+    
+     topla = 0
+     sayak = 0
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+End If
+
+
+
+
+If DateTime.Weekday(DateTime.Now) = 5 Then
+    
+
+    pl.Cells(5, 5) = DateTime.Day(DateTime.Now - 3) & "." & DateTime.Month(DateTime.Now - 3) & "-" & DateTime.Day(DateTime.Now + 1) & "." & DateTime.Month(DateTime.Now + 1)
+    pl.Cells(6, 5) = DateTime.Day(DateTime.Now + 4) & "." & DateTime.Month(DateTime.Now + 4) & "-" & DateTime.Day(DateTime.Now + 8) & "." & DateTime.Month(DateTime.Now + 8)
+    pl.Cells(7, 5) = DateTime.Day(DateTime.Now + 11) & "." & DateTime.Month(DateTime.Now + 11) & "-" & DateTime.Day(DateTime.Now + 15) & "." & DateTime.Month(DateTime.Now + 15)
+    pl.Cells(8, 5) = DateTime.Day(DateTime.Now + 18) & "." & DateTime.Month(DateTime.Now + 18) & "-" & DateTime.Day(DateTime.Now + 22) & "." & DateTime.Month(DateTime.Now + 22)
+    
+    
+    Set pl = Sheets("Plan")
+    sondv = pl.Cells(65536, 1).End(xlUp).Row
+    
+     For i = 1 To sondv
+        If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 2) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now - 4) Then
+     
+        topla = topla + pl.Cells(i, 2)
+        sayak = sayak + 1
+        pl.Cells(i, 11) = " 1.HAFTA"
+     
+        End If
+     Next i
+    
+   
+    
+    
+      pl.Cells(5, 6) = topla
+      pl.Cells(5, 7) = (topla / (7 - DateTime.Weekday(DateTime.Now))) / 4000
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+     
+     
+     
+     topla = 0
+     sayak = 0
+     
+     
+     
+     
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 9) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 3) Then
+     'MsgBox (pl.Cells(i, 1))
+     
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 2.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(6, 6) = topla
+     pl.Cells(6, 7) = (topla / 5) / 4000
+    
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+    
+    
+    For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 16) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 10) Then
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 3.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(7, 6) = topla
+     pl.Cells(7, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 23) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 17) Then
+     pl.Cells(i, 11) = " 4.HAFTA"
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     End If
+    Next i
+    
+    
+    
+    If sayak = 0 Then
+    sayak = 1
+    End If
+     pl.Cells(8, 6) = topla
+     pl.Cells(8, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    ' MsgBox ((topla / sayak) / 4000)
+     
+    
+     topla = 0
+     sayak = 0
+     
+  
+End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+If DateTime.Weekday(DateTime.Now) = 6 Then
+    
+
+    pl.Cells(5, 5) = DateTime.Day(DateTime.Now - 4) & "." & DateTime.Month(DateTime.Now - 4) & "-" & DateTime.Day(DateTime.Now) & "." & DateTime.Month(DateTime.Now)
+    pl.Cells(6, 5) = DateTime.Day(DateTime.Now + 3) & "." & DateTime.Month(DateTime.Now + 3) & "-" & DateTime.Day(DateTime.Now + 7) & "." & DateTime.Month(DateTime.Now + 7)
+    pl.Cells(7, 5) = DateTime.Day(DateTime.Now + 10) & "." & DateTime.Month(DateTime.Now + 10) & "-" & DateTime.Day(DateTime.Now + 14) & "." & DateTime.Month(DateTime.Now + 14)
+    pl.Cells(8, 5) = DateTime.Day(DateTime.Now + 17) & "." & DateTime.Month(DateTime.Now + 17) & "-" & DateTime.Day(DateTime.Now + 21) & "." & DateTime.Month(DateTime.Now + 21)
+    
+    
+    Set pl = Sheets("Plan")
+    sondv = pl.Cells(65536, 1).End(xlUp).Row
+    
+     For i = 1 To sondv
+        If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 1) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now - 5) Then
+     
+        topla = topla + pl.Cells(i, 2)
+        sayak = sayak + 1
+        pl.Cells(i, 11) = " 1.HAFTA"
+     
+        End If
+     Next i
+    
+   
+    
+    
+      pl.Cells(5, 6) = topla
+      pl.Cells(5, 7) = (topla / (7 - DateTime.Weekday(DateTime.Now))) / 4000
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+     
+     
+     
+     topla = 0
+     sayak = 0
+     
+     
+     
+     
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 8) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 2) Then
+     'MsgBox (pl.Cells(i, 1))
+     
+     
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 2.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(6, 6) = topla
+     If sayak = 0 Then
+        pl.Cells(6, 7) = 0
+     Else
+        pl.Cells(6, 7) = (topla / 5) / 4000
+     End If
+        
+    
+    ' MsgBox (topla)
+     'MsgBox (sayak)
+     'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+    
+    
+    For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 15) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 9) Then
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+      pl.Cells(i, 11) = " 3.HAFTA"
+     End If
+    Next i
+    
+    
+    
+    
+     pl.Cells(7, 6) = topla
+    If sayak = 0 Then
+        pl.Cells(7, 7) = 0
+    Else
+        pl.Cells(7, 7) = (topla / 5) / 4000
+    End If
+    
+     
+     
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    'MsgBox ((topla / sayak) / 4000)
+     
+    topla = 0
+     sayak = 0
+     
+     For i = 1 To sondv
+     If DateTime.DateValue(pl.Cells(i, 1)) < DateTime.DateValue(DateTime.Now + 22) And DateTime.DateValue(pl.Cells(i, 1)) > DateTime.DateValue(DateTime.Now + 16) Then
+     pl.Cells(i, 11) = " 4.HAFTA"
+     topla = topla + pl.Cells(i, 2)
+     sayak = sayak + 1
+     End If
+    Next i
+    
+    
+    
+    If sayak = 0 Then
+    sayak = 1
+    End If
+    
+     pl.Cells(8, 6) = topla
+     pl.Cells(8, 7) = (topla / 5) / 4000
+   '  MsgBox (topla)
+    ' MsgBox (sayak)
+    ' MsgBox ((topla / sayak) / 4000)
+     
+    
+     topla = 0
+     sayak = 0
+     
+  
+End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Call TemsilciGunluk
+
+
+Call GunG
+
+Call Aksama
+
+'Call Duzenle
+
+ 
+
+
+
+
+
+    
+
+
+
+End Sub
+
+Sub Aksama()
+
+Dim Aks As Integer
+Dim Uret As Integer
+
+Set Sh = Sheets("Sayfa1")
+Set pl = Sheets("Plan")
+
+sondv = Sh.Cells(65536, 1).End(xlUp).Row
+ 
+ 
+
+If DateTime.Weekday(DateTime.Now) = 2 Then
+
+    For i = 2 To sondv
+        If DateTime.DateValue(Sh.Cells(i, 10)) = DateTime.DateValue(DateTime.Now - 3) Then
+        Aks = Aks + Sh.Cells(i, 12)
+        Uret = Uret + Sh.Cells(i, 11)
+        End If
+    Next i
+End If
+
+If DateTime.Weekday(DateTime.Now) > 2 Or DateTime.Weekday(DateTime.Now) < 2 Then
+    
+    For i = 2 To sondv
+     
+        If DateTime.DateValue(Sh.Cells(i, 10)) = DateTime.DateValue(DateTime.Now - 1) Then
+      ' MsgBox ("deneme")
+        Aks = Aks + Sh.Cells(i, 12)
+      ' MsgBox ("Aks: " & Aks)
+        
+        Uret = Uret + Sh.Cells(i, 11)
+        
+       ' MsgBox ("Uret: " & Uret)
+        End If
+    Next i
+End If
+
+Sheets("Rapor").Cells(25, 9) = Aks
+
+Sheets("Rapor").Cells(26, 9) = Uret
+
+
+
+
+
+
+
+End Sub
+
+
+
+
+
+
+Sub TemsilciGunluk()
+
+Dim Isim As String
+Dim Gurup As String
+
+
+Set Sh = Sheets("Sayfa1")
+Set pl = Sheets("Plan")
+
+satirsayi = Sh.Cells(65536, 1).End(xlUp).Row
+
+
+'MÜÞTERÝ TEMSÝLCÝSÝ GÜNLÜK ÝÞ YÜKÜ DAÐILIMI ***************************
+
+
+
+
+For i = 1 To 9
+Isim = pl.Cells(i, 10)
+For tar = 2 To satirsayi
+
+If Sh.Cells(tar, 5) = Isim And DateTime.DateValue(Sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now) Then
+
+pl.Cells(i, 9) = pl.Cells(i, 9) + Sh.Cells(tar, 15)
+'MsgBox (Isim & "  " & DateTime.DateValue(sh.Cells(tar, 10)))
+
+End If
+
+If DateTime.Weekday(DateTime.Now) = 2 Then
+    If Sh.Cells(tar, 5) = Isim And DateTime.DateValue(Sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now - 3) Then
+        pl.Cells(i, 9) = pl.Cells(i, 9) + Sh.Cells(tar, 15)
+    End If
+Else
+    If Sh.Cells(tar, 5) = Isim And DateTime.DateValue(Sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now - 1) Then
+    pl.Cells(i, 9) = pl.Cells(i, 9) + Sh.Cells(tar, 15)
+    End If
+    
+
+
+
+End If
+
+
+    
+Next tar
+Next i
+
+
+'*******************************************************************************
+
+
+
+
+
+
+'MÜÞTERÝ TEMSÝLCÝSÝ AYLIK ÝÞ YÜKÜ DAÐILIMI ***************************
+pl.Cells(1, 8) = 0
+For i = 1 To 9
+Isim = pl.Cells(i, 10)
+For tar = 2 To satirsayi
+
+If Sh.Cells(tar, 5) = Isim And DateTime.Month(Sh.Cells(tar, 10)) = DateTime.Month(DateTime.Now) Then
+pl.Cells(i, 8) = pl.Cells(i, 8) + Sh.Cells(tar, 15)
+End If
+Next tar
+Next i
+'****************************************************************
+
+
+
+
+
+
+'ÜRÜN GURUBU GÜNLÜK ÝÞ YÜKÜ DAÐILIMI***************************************
+
+
+For i = 1 To 11
+Gurup = pl.Cells(i + 14, 10)
+For tar = 2 To satirsayi
+If Sh.Cells(tar, 7) = Gurup And DateTime.DateValue(Sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now) Then
+pl.Cells(i + 14, 9) = pl.Cells(i + 14, 9) + Sh.Cells(tar, 15)
+End If
+
+
+If DateTime.Weekday(DateTime.Now) = 2 Then
+    If Sh.Cells(tar, 7) = Gurup And DateTime.DateValue(Sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now - 3) Then
+    pl.Cells(i + 14, 9) = pl.Cells(i + 14, 9) + Sh.Cells(tar, 15)
+    End If
+
+Else
+
+    If Sh.Cells(tar, 7) = Gurup And DateTime.DateValue(Sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now - 1) Then
+
+    pl.Cells(i + 14, 9) = pl.Cells(i + 14, 9) + Sh.Cells(tar, 15)
+    
+    End If
+
+
+End If
+
+
+
+
+
+'MsgBox ("ya pazartesiye denk gelse idi...")
+
+Next tar
+Next i
+'**************************************************************************
+
+
+
+
+
+
+'ÜRÜN GURUBU AYLIK ÝÞ YÜKÜ DAÐILIMI****************************************
+For i = 1 To 11
+Gurup = pl.Cells(i + 14, 10)
+    For tar = 2 To satirsayi
+
+    If Sh.Cells(tar, 7) = Gurup And DateTime.Month(Sh.Cells(tar, 10)) = DateTime.Month(DateTime.Now) Then
+    pl.Cells(i + 14, 8) = pl.Cells(i + 14, 8) + Sh.Cells(tar, 15)
+    End If
+    Next tar
+Next i
+
+
+
+
+'**************************************************************************
+Set rp = Sheets("Rapor")
+
+For i = 1 To 9
+rp.Cells(12 + i, 3) = pl.Cells(i, 9)
+
+rp.Cells(12 + i, 5) = pl.Cells(i, 8)
+Next i
+
+For i = 1 To 11
+rp.Cells(25 + i, 3) = pl.Cells(i + 14, 9)
+
+rp.Cells(25 + i, 5) = pl.Cells(i + 14, 8)
+Next i
+
+
+
+
+
+
+
+
+
+
+
+
+
+'For tar = 2 To satirsayi
+
+   
+   
+   'If sh.Cells(tar, 5) = temsilciadi And DateTime.DateValue(sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now) Then
+
+    'pl.Cells(1, 9) = pl.Cells(1, 9) + sh.Cells(tar, 14)
+    
+    'End If
+    
+    'If DateTime.DateValue(sh.Cells(tar, 10)) = DateTime.DateValue(DateTime.Now - 1) Then
+    'MsgBox ("burayý unutma")
+    'End If
+    
+'Next tar
+
+
+End Sub
+
+
+
+
+
+
+
+Function ErtesiGunUretilecek()
+Set pl = Sheets("Plan")
+satirsayi = pl.Cells(65536, 1).End(xlUp).Row
+If DateTime.Weekday(DateTime.Now) = 5 Or DateTime.Weekday(DateTime.Now) = 6 Then
+    For tar = 1 To satirsayi
+        If DateTime.DateValue(pl.Cells(tar, 1)) = DateTime.DateValue(DateTime.Now + 4) Then
+    ErtesiGunUretilecek = pl.Cells(tar, 3)
+            
+        End If
+        
+    Next tar
+End If
+
+If DateTime.Weekday(DateTime.Now) = 1 Or DateTime.Weekday(DateTime.Now) = 2 Or DateTime.Weekday(DateTime.Now) = 3 Or DateTime.Weekday(DateTime.Now) = 4 Or DateTime.Weekday(DateTime.Now) = 7 Then
+For tar = 1 To satirsayi
+        If DateTime.DateValue(pl.Cells(tar, 1)) = DateTime.DateValue(DateTime.Now + 2) Then
+    ErtesiGunUretilecek = pl.Cells(tar, 3)
+        End If
+        Next tar
+End If
+
+
+
+
+
+
+
+
+
+
+End Function
+
+
+
+Function YarinUretilecek()
+Set pl = Sheets("Plan")
+satirsayi = pl.Cells(65536, 1).End(xlUp).Row
+If DateTime.Weekday(DateTime.Now) = 6 Then
+    For tar = 1 To satirsayi
+    If DateTime.DateValue(pl.Cells(tar, 1)) = DateTime.DateValue(DateTime.Now + 3) Then
+    YarinUretilecek = pl.Cells(tar, 3)
+    End If
+    Next tar
+   
+Else
+For zar = 1 To satirsayi
+    If DateTime.DateValue(pl.Cells(zar, 1)) = DateTime.DateValue(DateTime.Now + 1) Then
+    YarinUretilecek = pl.Cells(zar, 3)
+    End If
+ Next zar
+    
+   
+End If
+    
+
+   
+    
+
+
+
+
+End Function
+
+   'tarih_bugun = DateTime.Now - 1
+
+    'MsgBox (tarih_bugun)
+   'gun = DateTime.Weekday("10.12.2007")
+   'haftanýn kaçýncý gunu olduðunu belirtiyor.
+   
+   
+   'tarih_bugun = InputBox(gun, "aa.gg.yyyy formatýnda giriniz", Date)
+   Function BugunUretilen()
+   Set Sh = Sheets("Sayfa1")
+   sondv = Sh.Cells(65536, 1).End(xlUp).Row
+   For counter = 2 To sondv
+   If DateTime.DateValue(Sh.Cells(counter, 10)) = DateTime.DateValue(DateTime.Now) Then
+   BugunUretilen = BugunUretilen + Sh.Cells(counter, 14)
+   End If
+   Next counter
+   
+   
+   End Function
+   
+   Function BuAyToplamUretilen()
+   Set Sh = Sheets("Sayfa1")
+   sondv = Sh.Cells(65536, 1).End(xlUp).Row
+   For counter = 2 To sondv
+   If DateTime.Month(DateTime.Now) = DateTime.Month(Sh.Cells(counter, 10)) Then
+   BuAyToplamUretilen = BuAyToplamUretilen + Sh.Cells(counter, 14)
+   End If
+   Next counter
+   
+   
+   
+  
+   
+   
+   End Function
+   
+   
+   Function BuAyToplamUretilecek()
+   Set Sh = Sheets("Sayfa1")
+   sondv = Sh.Cells(65536, 1).End(xlUp).Row
+   For counter = 2 To sondv
+   If DateTime.Month(DateTime.Now) = DateTime.Month(Sh.Cells(counter, 10)) Then
+   
+   BuAyToplamUretilecek = BuAyToplamUretilecek + Sh.Cells(counter, 15)
+   End If
+   Next counter
+   
+   
+   End Function
+   
+   
+   
+   
+   
+   
+   Function BugunUretilecek()
+    Set Sh = Sheets("Sayfa1")
+   sondv = Sh.Cells(65536, 1).End(xlUp).Row
+    
+    If DateTime.Weekday(DateTime.Now) = 2 Then
+        For counter = 2 To sondv
+        If DateTime.DateValue(Sh.Cells(counter, 10)) = DateTime.DateValue(DateTime.Now) Or DateTime.DateValue(Sh.Cells(counter, 10)) = DateTime.DateValue(DateTime.Now - 3) Then
+        'MsgBox (counter)
+        BugunUretilecek = BugunUretilecek + Sh.Cells(counter, 15)
+        End If
+        Next counter
+    Else
+    
+    For counter = 2 To sondv
+        If DateTime.DateValue(Sh.Cells(counter, 10)) = DateTime.DateValue(DateTime.Now) Or DateTime.DateValue(Sh.Cells(counter, 10)) = DateTime.DateValue(DateTime.Now - 1) Then
+        'MsgBox (counter)
+        BugunUretilecek = BugunUretilecek + Sh.Cells(counter, 15)
+        End If
+        Next counter
+    
+    End If
+    
+    
+    
+    'MsgBox (DateTime.DateValue(sh.Cells(3, 10)))
+   
+   
+   
+
+    
+  End Function
+Sub HaftaG()
+'
+' GaftaG Makro
+' Makro Mustafa tarafýndan 09.01.2008 tarihinde kaydedildi.
+'
+' Klavye Kýsayolu: Ctrl+e
+'
+
+    
+    ActiveSheet.ChartObjects("Grafik 2").Activate
+    
+    ActiveChart.ChartArea.Select
+    
+    ActiveChart.SetSourceData Source:=Sheets("Plan").Range("E5:E8,G5:G8"), PlotBy:=xlColumns
+    
+    
+End Sub
+Sub GunG()
+'
+' GunG Makro
+' Makro Mustafa tarafýndan 09.01.2008 tarihinde kaydedildi.
+'
+' Klavye Kýsayolu: Ctrl+r
+'
+
+Set pl = Sheets("Plan")
+ SonSatir = pl.Cells(65536, 1).End(xlUp).Row
+    
+    
+   Sheets("Rapor").ChartObjects("Grafik 1").Activate
+   ActiveChart.ChartArea.Select
+    ActiveChart.SetSourceData Source:=Sheets("Plan").Range("A1:A" & SonSatir & ",C1:C" & SonSatir), PlotBy:=xlColumns
+End Sub
+Sub GunlukAksama()
+
+Dim biten As Integer
+
+Dim kalan As Integer
+
+Dim satirsayi As Integer
+
+Set Sh = Sheets("Sayfa1")
+Set pl = Sheets("Plan")
+
+
+satirsayi = Sh.Cells(65536, 1).End(xlUp).Row
+
+
+
+For i = 2 To satirsayi
+
+If DateTime.DateValue(Sh.Cells(i, 10)) = DateTime.DateValue(DateTime.Now - 1) Then
+
+biten = biten + Sh.Cells(i, 11)
+
+'MsgBox (Biten)
+kalan = kalan + Sh.Cells(i, 12)
+'MsgBox (Kalan)
+
+End If
+
+Next i
+
+
+Sheets("Rapor").Cells(25, 9) = biten
+Sheets("Rapor").Cells(26, 9) = kalan
+
+
+
+
+
+
+End Sub
+Sub InputBox()
+'
+myNum = Application.InputBox("Enter a number")
+
+'
+    ActiveWorkbook.Save
+    ActiveWindow.SmallScroll Down:=-6
+    Range("D12").Select
+    Sheets("Sayfa1").Select
+    Range("F16").Select
+    Application.Run "Makro.xls!InputBox"
+    Application.Goto Reference:="Makro1"
+    ActiveWindow.ScrollColumn = 2
+    ActiveWindow.ScrollColumn = 1
+    ActiveWindow.SmallScroll Down:=-9
+    ActiveWindow.ScrollColumn = 2
+    ActiveWindow.ScrollColumn = 3
+    ActiveWindow.ScrollColumn = 4
+    ActiveWindow.ScrollColumn = 5
+    Range("E1").Select
+    Selection.AutoFilter
+    Selection.AutoFilter Field:=13, Criteria1:="="
+    Selection.AutoFilter Field:=13
+    Selection.AutoFilter Field:=7, Criteria1:="="
+    Columns("F:F").ColumnWidth = 11
+    Range("G469").Select
+    Selection.AutoFilter Field:=7
+    Selection.AutoFilter
+    Range("G2").Select
+    Range("G2").Select
+    ActiveWindow.SmallScroll Down:=-3
+    Range("G2").Select
+    ActiveWorkbook.Save
+    ActiveWorkbook.Save
+    ActiveWindow.SmallScroll Down:=-6
+    Cells.Select
+    Selection.Delete Shift:=xlUp
+    Sheets("22OcakVeri").Select
+    Selection.Copy
+    Range("B32").Select
+    Sheets("Sayfa1").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Range("D11").Select
+    Application.Run "Makro.xls!Makro1"
+    Range("F16").Select
+    Application.Run "Makro.xls!Makro1"
+    Windows("Makro.xls").SmallScroll Down:=-39
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("Sayfa1").Select
+    ActiveWindow.SmallScroll Down:=-15
+    ActiveWindow.ScrollRow = 4
+    ActiveWindow.ScrollRow = 6
+    ActiveWindow.ScrollRow = 9
+    ActiveWindow.ScrollRow = 13
+    ActiveWindow.ScrollRow = 17
+    ActiveWindow.ScrollRow = 21
+    ActiveWindow.ScrollRow = 25
+    ActiveWindow.ScrollRow = 29
+    ActiveWindow.ScrollRow = 32
+    ActiveWindow.ScrollRow = 35
+    ActiveWindow.ScrollRow = 38
+    ActiveWindow.ScrollRow = 40
+    ActiveWindow.ScrollRow = 43
+    ActiveWindow.ScrollRow = 46
+    ActiveWindow.ScrollRow = 48
+    ActiveWindow.ScrollRow = 50
+    ActiveWindow.ScrollRow = 51
+    ActiveWindow.ScrollRow = 52
+    ActiveWindow.ScrollRow = 53
+    ActiveWindow.ScrollRow = 55
+    ActiveWindow.ScrollRow = 57
+    ActiveWindow.ScrollRow = 59
+    ActiveWindow.ScrollRow = 60
+    ActiveWindow.ScrollRow = 61
+    ActiveWindow.ScrollRow = 63
+    ActiveWindow.ScrollRow = 67
+    ActiveWindow.ScrollRow = 69
+    ActiveWindow.ScrollRow = 72
+    ActiveWindow.ScrollRow = 74
+    ActiveWindow.ScrollRow = 78
+    ActiveWindow.ScrollRow = 82
+    ActiveWindow.ScrollRow = 86
+    ActiveWindow.ScrollRow = 90
+    ActiveWindow.ScrollRow = 95
+    ActiveWindow.ScrollRow = 98
+    ActiveWindow.ScrollRow = 103
+    ActiveWindow.ScrollRow = 107
+    ActiveWindow.ScrollRow = 111
+    ActiveWindow.ScrollRow = 114
+    ActiveWindow.ScrollRow = 118
+    ActiveWindow.ScrollRow = 122
+    ActiveWindow.ScrollRow = 124
+    ActiveWindow.ScrollRow = 128
+    ActiveWindow.ScrollRow = 134
+    ActiveWindow.ScrollRow = 137
+    ActiveWindow.ScrollRow = 141
+    ActiveWindow.ScrollRow = 145
+    ActiveWindow.ScrollRow = 149
+    ActiveWindow.ScrollRow = 152
+    ActiveWindow.ScrollRow = 153
+    ActiveWindow.ScrollRow = 155
+    ActiveWindow.ScrollRow = 153
+    ActiveWindow.ScrollRow = 151
+    ActiveWindow.ScrollRow = 149
+    ActiveWindow.ScrollRow = 148
+    ActiveWindow.ScrollRow = 145
+    ActiveWindow.ScrollRow = 144
+    ActiveWindow.ScrollRow = 141
+    ActiveWindow.ScrollRow = 140
+    ActiveWindow.ScrollRow = 139
+    ActiveWindow.ScrollRow = 135
+    ActiveWindow.ScrollRow = 132
+    ActiveWindow.ScrollRow = 127
+    ActiveWindow.ScrollRow = 122
+    ActiveWindow.ScrollRow = 118
+    ActiveWindow.ScrollRow = 114
+    ActiveWindow.ScrollRow = 110
+    ActiveWindow.ScrollRow = 106
+    ActiveWindow.ScrollRow = 102
+    ActiveWindow.ScrollRow = 97
+    ActiveWindow.ScrollRow = 93
+    ActiveWindow.ScrollRow = 89
+    ActiveWindow.ScrollRow = 86
+    ActiveWindow.ScrollRow = 84
+    ActiveWindow.ScrollRow = 82
+    ActiveWindow.ScrollRow = 80
+    ActiveWindow.ScrollRow = 78
+    ActiveWindow.ScrollRow = 77
+    ActiveWindow.ScrollRow = 76
+    ActiveWindow.ScrollRow = 73
+    ActiveWindow.ScrollRow = 72
+    ActiveWindow.ScrollRow = 71
+    ActiveWindow.ScrollRow = 67
+    ActiveWindow.ScrollRow = 63
+    ActiveWindow.ScrollRow = 56
+    ActiveWindow.ScrollRow = 47
+    ActiveWindow.ScrollRow = 35
+    ActiveWindow.ScrollRow = 21
+    ActiveWindow.ScrollRow = 5
+    ActiveWindow.ScrollRow = 1
+    Range("F1").Select
+    Selection.AutoFilter
+    Selection.AutoFilter Field:=7, Criteria1:="s"
+    Selection.AutoFilter
+    ActiveWindow.SmallScroll Down:=-3
+    Range("E8").Select
+    Application.Goto Reference:="Makro1"
+    ActiveWorkbook.Save
+    ActiveWindow.SmallScroll Down:=-3
+    Cells.Select
+    Selection.Delete Shift:=xlUp
+    Sheets("Plan").Select
+    Range("A1:I27").Select
+    Range("I27").Activate
+    Selection.ClearContents
+    Sheets("Sayfa1").Select
+    ActiveWindow.SmallScroll Down:=-3
+    Sheets("22OcakVeri").Select
+    Cells.Select
+    Selection.Copy
+    Sheets("Sayfa1").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Range("D8").Select
+    Application.Run "Makro.xls!Makro1"
+    ActiveWindow.Visible = False
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    ActiveWorkbook.Save
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("Sayfa1").Select
+    Cells.Select
+    Range("C1").Activate
+    Selection.Delete Shift:=xlUp
+    Range("F25").Select
+    Sheets("Rapor").Select
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("22OcakVeri").Select
+    Selection.Copy
+    Sheets("Sayfa1").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Range("C7").Select
+    Application.Run "Makro.xls!Makro1"
+    ActiveWindow.Visible = False
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    ActiveWorkbook.Save
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("Sayfa1").Select
+    Cells.Select
+    Range("C1").Activate
+    Selection.Delete Shift:=xlUp
+    Sheets("Rapor").Select
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("22OcakVeri").Select
+    Selection.Copy
+    Sheets("Sayfa1").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Range("C5").Select
+    Application.Run "Makro.xls!Makro1"
+    Windows("Makro.xls").SmallScroll Down:=-9
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("Sayfa1").Select
+    ActiveWindow.SmallScroll Down:=-3
+    Range("M2").Select
+    ActiveWorkbook.Save
+    ActiveWindow.SmallScroll Down:=-9
+    Cells.Select
+    Selection.Delete Shift:=xlUp
+    Range("A1").Select
+    Sheets("Rapor").Select
+    ActiveSheet.ChartObjects("Grafik 1").Activate
+    Windows("Makro.xls").SmallScroll Down:=-9
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("Plan").Select
+    Selection.ClearContents
+    Sheets("Sayfa1").Select
+    ActiveWindow.SmallScroll Down:=-3
+    Sheets("22OcakVeri").Select
+    Selection.Copy
+    Sheets("Sayfa1").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Range("D5").Select
+    Application.Run "Makro.xls!Makro1"
+    Windows("Makro.xls").SmallScroll Down:=-18
+    ActiveWindow.Visible = False
+    Windows("Makro.xls").Activate
+    Sheets("Sayfa1").Select
+    Range("F14").Select
+End Sub
+
+
+Sub Duzenle()
+'
+' Duzenle Makro
+' Makro Mustafa tarafýndan 10.01.2008 tarihinde kaydedildi.
+'
+' Klavye Kýsayolu: Ctrl+d
+'
+    Range("B13:F21").Select
+    Range("F13").Activate
+    Selection.Sort Key1:=Range("F13"), Order1:=xlDescending, Header:=xlGuess _
+        , OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+    ActiveWindow.SmallScroll Down:=12
+    Range("B26:F36").Select
+    Range("F26").Activate
+    Selection.Sort Key1:=Range("F26"), Order1:=xlDescending, Header:=xlGuess _
+        , OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+    ActiveWindow.SmallScroll Down:=0
+    Range("H30:J36").Select
+    Range("J30").Activate
+    Selection.Sort Key1:=Range("J30"), Order1:=xlDescending, Header:=xlGuess _
+        , OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+End Sub
+
+Sub AdaGoreSirala()
+'
+' AdaGoreSirala Makro
+' Makro Mustafa tarafýndan 11.01.2008 tarihinde kaydedildi.
+'
+' Klavye Kýsayolu: Ctrl+s
+'
+    Range("B13:F21").Select
+    Selection.Sort Key1:=Range("B13"), Order1:=xlAscending, Header:=xlGuess, _
+        OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+    ActiveWindow.SmallScroll Down:=15
+    Range("B26:F36").Select
+    Selection.Sort Key1:=Range("B26"), Order1:=xlAscending, Header:=xlGuess, _
+        OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+End Sub
