@@ -1,0 +1,17 @@
+Sub AdaGoreSirala()
+'
+' AdaGoreSirala Makro
+' Makro Mustafa tarafýndan 11.01.2008 tarihinde kaydedildi.
+'
+' Klavye Kýsayolu: Ctrl+s
+'
+    Range("B13:F21").Select
+    Selection.Sort Key1:=Range("B13"), Order1:=xlAscending, Header:=xlGuess, _
+        OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+    ActiveWindow.SmallScroll Down:=15
+    Range("B26:F36").Select
+    Selection.Sort Key1:=Range("B26"), Order1:=xlAscending, Header:=xlGuess, _
+        OrderCustom:=1, MatchCase:=False, Orientation:=xlTopToBottom, _
+        DataOption1:=xlSortNormal
+End Sub
